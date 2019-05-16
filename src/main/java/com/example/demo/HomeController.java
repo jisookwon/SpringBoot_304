@@ -25,11 +25,13 @@ public class HomeController {
     @GetMapping("/add")
     public String courseForm(Model model){
         model.addAttribute("course", new Course());
-        return "courseForm";
+        return "courseform";
     }
 
     @PostMapping("/process")
-    public String processForm(@Valid Course course, BindingResult result){
+    public String processForm(@Valid Course course, BindingResult result, Model model){
+        model.addAttribute("course", new Course());
+
         if (result.hasErrors()){
             return "courseform";
         }
@@ -39,13 +41,13 @@ public class HomeController {
 
     @RequestMapping("/detail/{id}")
     public String showCourses(@PathVariable("id") long id, Model model){
-        model.addAttribute("courses", courseRepository.findById(id).get());
+        model.addAttribute("course", courseRepository.findById(id).get());
         return "show";
     }
 
     @RequestMapping("/update/{id}")
     public String updateCourses(@PathVariable("id") long id, Model model){
-        model.addAttribute("courses", courseRepository.findById(id).get());
+        model.addAttribute("course", courseRepository.findById(id).get());
         return "courseform";
     }
 
